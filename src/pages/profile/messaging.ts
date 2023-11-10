@@ -313,6 +313,16 @@ class MessageHistoryComponent
 
   viewMessage(message: Message) {
     switch (message.type) {
+      case "https://example.com/sd-jwt/0.0/presentation":
+        let verify = false; // this.my_verify_method(message)
+        return m(
+          MessageCard,
+          {
+            header: message.sender,
+            message,
+          },
+          [m("p", message.content)]
+        )
       case "https://didcomm.org/basicmessage/2.0/message":
         return m(
           MessageCard,
