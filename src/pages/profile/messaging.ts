@@ -311,17 +311,21 @@ class MessageHistoryComponent
     return messageType.slice(0, messageType.lastIndexOf("/"))
   }
 
+  my_verify_method(attachment: any) {
+    return attachment["id"]
+  }
+
   viewMessage(message: Message) {
     switch (message.type) {
-      case "https://example.com/sd-jwt/0.0/presentation":
-        let verify = false; // this.my_verify_method(message)
+      case "https://didcomm.org/present-proof/3.0/presentation":
+        let verifications = message?.raw?.attachments?.map((attachment: any) => this.my_verify_method(attachment));
         return m(
           MessageCard,
           {
             header: message.sender,
             message,
           },
-          [m("p", message.content)]
+          [m("p", verifications.join(", "))]
         )
       case "https://didcomm.org/basicmessage/2.0/message":
         return m(
