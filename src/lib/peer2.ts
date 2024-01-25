@@ -55,12 +55,6 @@ export default class DIDPeer {
     return atob(base64)
   }
 
-  // Determine ident for key
-  static keyToIdent(key: Uint8Array, prefix: multicodec.CodecName): string {
-    const encoded = DIDPeer.keyToMultibase(key, prefix)
-    return encoded.toString().slice(1, 9)
-  }
-
   // Generate a DID
   static generate(
     signingKeys: Uint8Array[],
@@ -159,6 +153,7 @@ export default class DIDPeer {
       id: did,
     }
     let serviceIndex = 0;
+    let keyIndex = 1;
 
     elements.forEach(element => {
       const purposeCode = element.charAt(0)
@@ -175,10 +170,7 @@ export default class DIDPeer {
           if (!doc.verificationMethod) {
             doc.verificationMethod = []
           }
-          let ident = `${did}#${DIDPeer.keyToIdent(
-            decodedSigningKey,
-            "ed25519-pub"
-          )}`
+          let ident = `${did}#key-${keyIndex++}`
           doc.verificationMethod.push({
             id: ident,
             controller: did,
@@ -202,10 +194,7 @@ export default class DIDPeer {
           if (!doc.verificationMethod) {
             doc.verificationMethod = []
           }
-          let ident = `${did}#${DIDPeer.keyToIdent(
-            decodedEncryptionKey,
-            "x25519-pub"
-          )}`
+          let ident = `${did}#key-${keyIndex++}`
           doc.verificationMethod.push({
             id: ident,
             controller: did,

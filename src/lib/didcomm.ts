@@ -26,9 +26,8 @@ function x25519ToSecret(
   x25519KeyPriv: Uint8Array,
   x25519Key: Uint8Array
 ): Secret {
-  const encIdent = DIDPeer.keyToIdent(x25519Key, "x25519-pub")
   const secretEnc: Secret = {
-    id: `${did}#${encIdent}`,
+    id: `${did}#key-2`,
     type: "X25519KeyAgreementKey2020",
     privateKeyMultibase: DIDPeer.keyToMultibase(x25519KeyPriv, "x25519-priv"),
   }
@@ -40,9 +39,8 @@ function ed25519ToSecret(
   ed25519KeyPriv: Uint8Array,
   ed25519Key: Uint8Array
 ): Secret {
-  const verIdent = DIDPeer.keyToIdent(ed25519Key, "ed25519-pub")
   const secretVer: Secret = {
-    id: `${did}#${verIdent}`,
+    id: `${did}#key-1`,
     type: "Ed25519VerificationKey2020",
     privateKeyMultibase: DIDPeer.keyToMultibase(ed25519KeyPriv, "ed25519-priv"),
   }
