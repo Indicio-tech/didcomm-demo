@@ -59,7 +59,7 @@ export function generateDidForMediator() {
       accept: ["didcomm/v2"],
     },
   }
-  const did = DIDPeer.generate([verkey], [enckey], {})
+  const did = DIDPeer.generate([verkey], [enckey], service)
 
   const secretVer = ed25519ToSecret(did, key, verkey)
   const secretEnc = x25519ToSecret(did, enckeyPriv, enckey)
