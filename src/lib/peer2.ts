@@ -75,12 +75,15 @@ export default class DIDPeer {
     })
 
     // Encode service block
-    let abbreviatedService = JSON.stringify(
-      DIDPeer.abbreviateCommonStrings(serviceBlock)
-    )
-    abbreviatedService = abbreviatedService.replace(/\s+/g, "")
-    const encodedService = DIDPeer.base64UrlEncode(abbreviatedService)
-    const finalService = "." + purposeCodeList["Service"] + encodedService
+    let finalService = ""
+    if (Object.keys(serviceBlock).length) {
+      let abbreviatedService = JSON.stringify(
+        DIDPeer.abbreviateCommonStrings(serviceBlock)
+      )
+      abbreviatedService = abbreviatedService.replace(/\s+/g, "")
+      const encodedService = DIDPeer.base64UrlEncode(abbreviatedService)
+      finalService = "." + purposeCodeList["Service"] + encodedService
+    }
 
     return (
       didPrefix +
