@@ -54,8 +54,10 @@ export function generateDidForMediator() {
   const enckey = edwardsToMontgomeryPub(verkey)
   const service = {
     type: "DIDCommMessaging",
-    serviceEndpoint: "",
-    accept: ["didcomm/v2"],
+    serviceEndpoint: {
+      uri: "didcomm:transport/queue",
+      accept: ["didcomm/v2"],
+    },
   }
   const did = DIDPeer.generate([verkey], [enckey], service)
 
